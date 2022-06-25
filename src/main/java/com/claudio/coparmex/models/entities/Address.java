@@ -2,22 +2,23 @@ package com.claudio.coparmex.models.entities;
 
 import com.claudio.coparmex.models.entities.enumerators.City;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+@Embeddable
 public class Address implements Serializable {
 
     private String street;
     private int number;
     private String colony;
     private int codePostal;
-    private City city;
+    private String city;
 
     public Address() {
     }
 
-    public Address(String street, int number, String colony, int codePostal, City city) {
+    public Address(String street, int number, String colony, int codePostal, String city) {
         this.street = street;
         this.number = number;
         this.colony = colony;
@@ -57,11 +58,11 @@ public class Address implements Serializable {
         this.codePostal = codePostal;
     }
 
-    public City getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(String city) {
         this.city = city;
     }
 }

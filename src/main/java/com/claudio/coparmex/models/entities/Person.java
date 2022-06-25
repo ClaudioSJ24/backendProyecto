@@ -1,34 +1,44 @@
 package com.claudio.coparmex.models.entities;
 
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "people")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person implements Serializable {
-    private int idPerson;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idP;
+    @Column(nullable = false, length = 30)
     private String name;
+    @Column(nullable = false, length = 50)
     private String lastname;
-    private int phone;
+    @Column(nullable = false,length = 10)
+    private String phone;
+    @Column(nullable = false, unique = true)
     private String email;
 
     public Person() {
     }
 
-    public Person(int idPerson, String name, String lastname, int phone, String email) {
-        this.idPerson = idPerson;
+    public Person(Integer idP, String name, String lastname, String phone, String email) {
+        this.idP = idP;
         this.name = name;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
     }
 
-    public int getIdPerson() {
-        return idPerson;
+    public Integer getIdP() {
+        return idP;
     }
 
-    public void setIdPerson(int idPerson) {
-        this.idPerson = idPerson;
+    public void setIdP(Integer idP) {
+        this.idP = idP;
     }
 
     public String getName() {
@@ -47,11 +57,11 @@ public abstract class Person implements Serializable {
         this.lastname = lastname;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -66,7 +76,7 @@ public abstract class Person implements Serializable {
     @Override
     public String toString() {
         return "Person{" +
-                "idPerson=" + idPerson +
+                "idPerson=" + idP +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", phone=" + phone +
@@ -79,11 +89,11 @@ public abstract class Person implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return idPerson == person.idPerson;
+        return idP == person.idP;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idPerson);
+        return Objects.hash(idP);
     }
 }

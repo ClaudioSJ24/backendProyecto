@@ -13,37 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class NotPartnerDAOImp implements NotPartnerDAO {
+public class NotPartnerDAOImp extends GenericDAOImp<Person, PersonRepository> implements NotPartnerDAO {
+
     /**
      * Se crea una instancia del repositorio para poder utilizar los metodos esenciales
      * de un crud que nos proporciona la clase NotPartnerRepository que hereda de PersonRepostory
      * que a su vez hereda de la clase CrudRepository
      * **/
     @Autowired
-    @Qualifier(value = "notPartnersRepository")/** Nombre del Bean a utilizar de interfaz NotPartnerDAO*/
-    private PersonRepository personRepository;
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Person> findById(Integer id) {
-        return personRepository.findById(id);
+    /** @Qualifier(value = "notPartnersRepository") Nombre del Bean a utilizar de interfaz NotPartnerDAO*/
+    public NotPartnerDAOImp(@Qualifier(value = "notPartnersRepository")PersonRepository genericRepository) {
+        super(genericRepository);
     }
 
-    @Override
-    @Transactional
-    public Person save(Person person) {
-        return personRepository.save(person);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Iterable<Person> findAll() {
-        return personRepository.findAll();
-    }
-
-    @Override
-    @Transactional
-    public void deleteById(Integer id) {
-        personRepository.findById(id);
-    }
 }

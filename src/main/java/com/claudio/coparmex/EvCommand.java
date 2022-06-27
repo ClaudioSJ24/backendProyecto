@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Clase que permite ejecutar la instacia de la clase Event
  * */
@@ -34,13 +37,16 @@ public class EvCommand implements CommandLineRunner {
 
         Person notPartner = new NotPartner(null, "claudio", "Sanchez Juarez", "9876543215","clajd@gmail");
         Person save = notPartnerDAOService.save(notPartner);
-        System.out.println(save.toString());*/
+        System.out.println(save.toString());
 
-        Person partner = new Partner(null, "Aranza", "Hernandez Mendoza", "345678965","ar@cmj","Esteren",new Address("4 norte",24,"la orizabeña",78654,"Tehuacan"));
-
+        Person partner = new Partner(null, "Aza", "Hernandez Mendoza", "345678965","er@cmj","Esteren",new Address("4 norte",24,"la orizabeña",78654,"Tehuacan"));
         Person save = partnerDAOService.save(partner);
 
         System.out.println(save.toString());
+        List<Person> all = (List<Person>) partnerDAOService.findAll();
+        all.forEach(System.out::println        );*/
 
-    }
+
 }
+}
+

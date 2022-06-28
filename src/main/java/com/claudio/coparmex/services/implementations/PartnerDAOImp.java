@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 
-public class PartnerDAOImp extends GenericDAOImp<Person, PersonRepository> implements PartnerDAO {
+public class PartnerDAOImp extends PersonDAOImp implements PartnerDAO {
 
     /**
      * Se crea una instancia del repositorio para poder utilizar los metodos esenciales
@@ -27,4 +27,12 @@ public class PartnerDAOImp extends GenericDAOImp<Person, PersonRepository> imple
         super(genericRepository);
     }
 
+    /**
+     * Implementacion de metodos de interfaz PartnerDAO, destacar que se tiene que castear a PartnerRepository
+     * debido a que por defecto utiliza PersonRepository
+     * */
+    @Override
+    public Iterable<Person> findPartnerEvent(String name) {
+        return ((PartnerRepository)genericRepository).findPartnerEvent(name);
+    }
 }

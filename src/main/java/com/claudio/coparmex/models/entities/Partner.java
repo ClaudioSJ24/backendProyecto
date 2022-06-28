@@ -77,7 +77,13 @@ public class Partner extends Person {
 
     @Override
     public String toString() {
-        return super.toString() +
-                "Partner{}";
+        return super.toString()+
+                "Partner{" +
+                "company='" + company + '\'' +
+                ", address=" + address +
+                ", dischargeDate=" + dischargeDate +
+                ", updateDate=" + updateDate +
+                ", event=" + event +
+                '}';
     }
 }

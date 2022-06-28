@@ -11,7 +11,12 @@ public interface NotPartnerDAO extends PersonDAO {
      * En esta interface se establecen todos los metodos de un crud basico heredados de PesonaDAO que se tienen que implementar
      * en la clase NotPartnerDAOImp para su uso adecuado, destacar que en esta interfaz se agregaran los metodos
      * personalizados (para una consulta en especial de los no socios).
-     * */
+         * */
 
+
+    /**
+     * Metodo proveniente de NotPartnerRepositorio para su implementacion en la clase NotPartnerDAOImp
+     */
+    Optional<Person> findByName(String name);
 
 }

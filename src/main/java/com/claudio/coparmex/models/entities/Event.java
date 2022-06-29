@@ -1,5 +1,7 @@
 package com.claudio.coparmex.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -29,13 +31,21 @@ public class Event implements Serializable{
             mappedBy = "event",
             fetch = FetchType.LAZY
     )
+    /**
+     * ignora el objeto de tipo Event de la clase NotPartner
+     */
+    @JsonIgnoreProperties(value = {"event"})
     private Set<NotPartner> notPartner;
 
     @OneToMany(
             mappedBy = "event",
             fetch = FetchType.LAZY
     )
-    private Set<Partner> pather;
+    @JsonIgnoreProperties(value = {"event"})
+    /**
+     * ignora el objeto de tipo Event de la clase Partner
+     */
+    private Set<Partner> partner;
 
     public Event() {
     }
@@ -72,12 +82,12 @@ public class Event implements Serializable{
         this.notPartner = notPartner;
     }
 
-    public Set<Partner> getPather() {
-        return pather;
+    public Set<Partner> getPartner() {
+        return partner;
     }
 
-    public void setPather(Set<Partner> pather) {
-        this.pather = pather;
+    public void setPartner(Set<Partner> partner) {
+        this.partner = partner;
     }
 
     public String getNameEvent() {

@@ -1,6 +1,9 @@
 package com.claudio.coparmex.services.contracts;
 
+import com.claudio.coparmex.models.entities.Partner;
 import com.claudio.coparmex.models.entities.Person;
+
+import java.util.Optional;
 
 /***
  * En esta interface se establecen todos los metodos de un crud basico heredados de PesonaDAO que se tienen que implementar
@@ -18,6 +21,10 @@ public interface PartnerDAO extends PersonDAO {
      * */
 
     Iterable<Person> findPartnerEvent(String name);
+
+    Iterable<Partner> getAllPartner();
+
+    Optional<Partner> findByIdP(Integer idPartner);
 
 
 

@@ -65,4 +65,15 @@ public class Address implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + street + '\'' +
+                ", number=" + number +
+                ", colony='" + colony + '\'' +
+                ", codePostal=" + codePostal +
+                ", city='" + city + '\'' +
+                '}';
+    }
 }

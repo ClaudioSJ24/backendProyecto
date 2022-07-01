@@ -4,12 +4,12 @@ import com.claudio.coparmex.models.entities.*;
 import com.claudio.coparmex.services.contracts.EventDAO;
 import com.claudio.coparmex.services.contracts.NotPartnerDAO;
 import com.claudio.coparmex.services.contracts.PartnerDAO;
-import com.claudio.coparmex.services.implementations.EventDAOImp;
+import com.claudio.coparmex.services.contracts.PersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,6 +26,10 @@ public class EvCommand implements CommandLineRunner {
 
     @Autowired
     private PartnerDAO partnerDAOService;
+
+    @Autowired
+    @Qualifier("partnerDAOImp")
+    private PersonDAO personDAOService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -75,7 +79,42 @@ public class EvCommand implements CommandLineRunner {
         Person partner = new Partner(null, "Azakjfdk", "Hernandez Mendoza", "345678965","epr@cmj","Esteren",new Address("4 norte",24,"la orizabeña",78654,"Tehuacan"));
         Person save = partnerDAOService.save(partner);
 
+
+
+        List<Person> all = (List<Person>) partnerDAOService.findAll();
+        all.forEach(System.out::println );
+
+
+
+        Optional<Event> byIdvent = eventDAOService.findById(2);
+        Iterable<Person> partners = personDAOService.findAll();
+        partners.forEach( partner -> ((Partner)partner).setEvent(byIdvent.get()));
+        partners.forEach(partner -> personDAOService.save(partner));
+
+
+ Iterable<Person> allP = partnerDAOService.findLastname("Sanchez Juarez");
+                allP.forEach(System.out::println);
+
+
+        List<Person> all = (List<Person>) partnerDAOService.findAll();
+        all.forEach(System.out::println );
+
+
+
+
+        Optional<Event> byIdvent = eventDAOService.findById(2);
+        Iterable<Person> partners = personDAOService.findAll();
+        partners.forEach( partner -> ((NotPartner)partner).setEventos(byIdvent.get()));
+        partners.forEach(partner -> personDAOService.save(partner));
+
+
+
+        Iterable<Partner> allPartner = partnerDAOService.getAllPartner();
+
+        allPartner.forEach(System.out::println);
+
          */
+
 
     }
 }

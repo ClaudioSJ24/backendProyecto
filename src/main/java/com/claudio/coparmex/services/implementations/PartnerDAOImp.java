@@ -1,5 +1,6 @@
 package com.claudio.coparmex.services.implementations;
 
+import com.claudio.coparmex.models.entities.Partner;
 import com.claudio.coparmex.models.entities.Person;
 import com.claudio.coparmex.repositories.PartnerRepository;
 import com.claudio.coparmex.repositories.PersonRepository;
@@ -12,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Table;
 import java.util.Optional;
 
-@Service
+@Service()
+
 
 public class PartnerDAOImp extends PersonDAOImp implements PartnerDAO {
 
@@ -32,7 +34,22 @@ public class PartnerDAOImp extends PersonDAOImp implements PartnerDAO {
      * debido a que por defecto utiliza PersonRepository
      * */
     @Override
+    @Transactional(readOnly = true)
     public Iterable<Person> findPartnerEvent(String name) {
         return ((PartnerRepository)genericRepository).findPartnerEvent(name);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Iterable<Partner> getAllPartner() {
+        return ((PartnerRepository)genericRepository).getAllPartner();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Partner> findByIdP(Integer idP) {
+        return ((PartnerRepository)genericRepository).findByIdP(idP);
+    }
+
+
 }

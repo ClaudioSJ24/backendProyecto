@@ -1,13 +1,51 @@
 package com.claudio.coparmex.models.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "people")
+/***
+ * Establece herencia a la clase Partner y NotPartner
+ */
 @Inheritance(strategy = InheritanceType.JOINED)
+/**
+ * Al ser una clase abstracta es necesario  establecer el nombre(JsonTypeInfo.Id.NAME) de las clases que heredan de la
+ * clase persona mediante la propiedad property = "class"
+ */
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "class"
+)
+/**
+ * Se establecen las clases a referenciar, por ejemplo
+ * {
+ *     "class": "partner",
+ *     "name": "pedro",
+ *     "lastname": "hernandes",
+ *     "phone": "234543",
+ *     "email": "ijdh@jfgg",
+ *     "company": "Transportes",
+ *     "address":{
+ *         "street": "5 poniente",
+ *         "number": 8,
+ *         "colony": "Reforma",
+ *         "codePostal": 98654,
+ *         "city": "Mexico"
+ *     }
+ *
+ * }
+ */
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Partner.class, name = "partner"),
+        @JsonSubTypes.Type(value = NotPartner.class, name = "notPartner")
+})
 public abstract class Person implements Serializable {
 
     @Id

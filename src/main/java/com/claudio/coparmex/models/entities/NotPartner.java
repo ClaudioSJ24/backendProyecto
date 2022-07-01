@@ -1,5 +1,7 @@
 package com.claudio.coparmex.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -20,6 +22,7 @@ public class NotPartner extends Person{
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "idEvent")
+    @JsonIgnoreProperties(value = {"notPartner"})
     private Event event;
 
 

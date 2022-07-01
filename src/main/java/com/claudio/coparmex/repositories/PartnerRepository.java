@@ -1,9 +1,12 @@
 package com.claudio.coparmex.repositories;
 
 
+import com.claudio.coparmex.models.entities.Partner;
 import com.claudio.coparmex.models.entities.Person;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * Asignamos nombre del repositorio para utilizar el Bean  mediante @Qualifier, debido a que de momento
@@ -21,4 +24,17 @@ public interface PartnerRepository extends PersonRepository{
      * */
     @Query("select p from Partner p where p.event.nameEvent=?1")
     Iterable<Person> findPartnerEvent(String name);
+
+    /***
+     *
+     * SELECT d.name, e.name, e.email, e.address FROM department d LEFT JOIN employee e ON d.id = e.dept_id;
+     */
+    @Query("select p from Partner p join Person a  on p.idP = a.idP")
+    Iterable<Partner> getAllPartner();
+
+    Optional<Partner> findByIdP(Integer idPartner);
+
+
+
+
 }

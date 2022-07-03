@@ -1,6 +1,8 @@
 package com.claudio.coparmex.repositories;
 
+import com.claudio.coparmex.models.entities.NotPartner;
 import com.claudio.coparmex.models.entities.Person;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -22,4 +24,11 @@ public interface NotPartnerRepository extends PersonRepository{
      */
 
     Optional<Person> findByName(String name);
+
+    @Query("select n from NotPartner n inner join Person p on n.idP=p.idP")
+    Iterable<NotPartner> getAllNotPartner();
+
+    Optional<NotPartner> findByIdP(Integer id);
+
+
 }

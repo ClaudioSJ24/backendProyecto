@@ -115,6 +115,9 @@ public class EvCommand implements CommandLineRunner {
 
          */
 
+        Iterable<NotPartner> allNotPartner = notPartnerDAOService.getAllNotPartner();
+
+
 
     }
 }

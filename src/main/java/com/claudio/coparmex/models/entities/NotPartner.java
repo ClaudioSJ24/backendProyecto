@@ -49,7 +49,9 @@ public class NotPartner extends Person{
 
     @Override
     public String toString() {
-        return super.toString() +
-                "NotPartner{}";
+        return "NotPartner{" +
+                "dischargeDate=" + dischargeDate +
+                ", event=" + event +
+                '}';
     }
 }

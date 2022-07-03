@@ -1,5 +1,6 @@
 package com.claudio.coparmex.services.implementations;
 
+import com.claudio.coparmex.models.entities.Person;
 import com.claudio.coparmex.services.contracts.GenericDAO;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,8 @@ public class GenericDAOImp<E,R extends CrudRepository<E,Integer>> implements Gen
 
     @Override
     @Transactional
-    public void deleteById(Integer id) {
+    public Optional<Person> deleteById(Integer id) {
         genericRepository.deleteById(id);
+        return null;
     }
 }

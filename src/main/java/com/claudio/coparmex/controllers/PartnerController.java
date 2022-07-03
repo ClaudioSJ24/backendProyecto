@@ -82,7 +82,7 @@ public class PartnerController {
 
     @DeleteMapping("/{id}")
     void deletePartner(@PathVariable Integer id){
-        Optional<Person> idD= partnerDAOService.findById(id);
+        Optional<Partner> idD= partnerDAOService.findByIdP(id);
         if (idD.isEmpty()){
             throw new BadRequestExceptions("El id %d no existe"+id);
         }

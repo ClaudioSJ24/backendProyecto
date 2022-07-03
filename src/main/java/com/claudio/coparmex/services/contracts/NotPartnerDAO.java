@@ -19,4 +19,8 @@ public interface NotPartnerDAO extends PersonDAO {
      */
     Optional<Person> findByName(String name);
 
+        Iterable<NotPartner> getAllNotPartner();
+
+    Optional<NotPartner> findByIdP(Integer id);
+
 }

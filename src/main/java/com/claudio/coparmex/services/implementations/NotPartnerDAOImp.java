@@ -1,5 +1,6 @@
 package com.claudio.coparmex.services.implementations;
 
+import com.claudio.coparmex.models.entities.NotPartner;
 import com.claudio.coparmex.models.entities.Person;
 import com.claudio.coparmex.repositories.NotPartnerRepository;
 import com.claudio.coparmex.repositories.PersonRepository;
@@ -7,6 +8,7 @@ import com.claudio.coparmex.services.contracts.NotPartnerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -30,7 +32,20 @@ public class NotPartnerDAOImp extends PersonDAOImp implements NotPartnerDAO {
      * de PersonRepository
      * */
     @Override
+    @Transactional(readOnly = true)
     public Optional<Person> findByName(String name) {
         return ((NotPartnerRepository)genericRepository).findByName(name);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Iterable<NotPartner> getAllNotPartner() {
+        return ((NotPartnerRepository)genericRepository).getAllNotPartner();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<NotPartner> findByIdP(Integer id) {
+        return ((NotPartnerRepository)genericRepository).findByIdP(id);
     }
 }

@@ -25,6 +25,7 @@ public interface PartnerDAO extends PersonDAO {
     Iterable<Partner> getAllPartner();
 
     Optional<Partner> findByIdP(Integer idPartner);
+    Iterable<Partner> findByEventId(Integer idE);
 
 
 

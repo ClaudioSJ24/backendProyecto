@@ -34,6 +34,9 @@ public interface PartnerRepository extends PersonRepository{
 
     Optional<Partner> findByIdP(Integer idPartner);
 
+    @Query("select p from Partner p join fetch p.event e where e.idEvent = ?1")
+    Iterable<Partner> findByEventId(Integer idE);
+
 
 
 

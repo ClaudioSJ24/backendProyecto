@@ -51,5 +51,11 @@ public class PartnerDAOImp extends PersonDAOImp implements PartnerDAO {
         return ((PartnerRepository)genericRepository).findByIdP(idP);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Iterable<Partner> findByEventId(Integer idE) {
+        return ((PartnerRepository)genericRepository).findByEventId(idE);
+    }
+
 
 }

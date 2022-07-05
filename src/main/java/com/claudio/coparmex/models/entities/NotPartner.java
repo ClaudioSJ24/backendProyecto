@@ -22,7 +22,8 @@ public class NotPartner extends Person{
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "idEvent")
-    @JsonIgnoreProperties(value = {"notPartner"})
+    @JsonIgnoreProperties({
+            "hibernateLazyInitializer","notPartner"})
     private Event event;
 
 
@@ -34,12 +35,13 @@ public class NotPartner extends Person{
 
     }
 
-    public Event getEventos() {
+
+    public Event getEvent() {
         return event;
     }
 
-    public void setEventos(Event eventos) {
-        this.event = eventos;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     @PrePersist
@@ -49,7 +51,8 @@ public class NotPartner extends Person{
 
     @Override
     public String toString() {
-        return "NotPartner{" +
+        return super.toString()+
+                "NotPartner{" +
                 "dischargeDate=" + dischargeDate +
                 ", event=" + event +
                 '}';

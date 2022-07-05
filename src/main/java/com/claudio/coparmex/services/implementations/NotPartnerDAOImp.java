@@ -48,4 +48,9 @@ public class NotPartnerDAOImp extends PersonDAOImp implements NotPartnerDAO {
     public Optional<NotPartner> findByIdP(Integer id) {
         return ((NotPartnerRepository)genericRepository).findByIdP(id);
     }
+
+    @Override
+    public Iterable<NotPartner> findByIdEvent(Integer idE) {
+        return ((NotPartnerRepository)genericRepository).findByIdEvent(idE);
+    }
 }

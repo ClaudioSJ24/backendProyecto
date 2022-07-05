@@ -54,6 +54,17 @@ public class NotPartnerController {
      return findId.get();
 
     }
+    @GetMapping("event/{idE}")
+    List<NotPartner> findNotPartnerEvent(@PathVariable Integer idE){
+
+        List<NotPartner> listEvent = (List<NotPartner>) notPartnerDAOService.findByIdEvent(idE);
+        if (listEvent.isEmpty()){
+            throw new BadRequestExceptions("No existen personas en la base de datos con el evento "+idE);
+
+        }
+        return  listEvent;
+
+    }
 
     @PutMapping("/{id}")
     NotPartner updateNotPartner(@PathVariable(required = false) Integer id, @RequestBody NotPartner notPartner){

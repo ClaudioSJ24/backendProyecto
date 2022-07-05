@@ -42,6 +42,16 @@ public class PartnerController {
         return  partnerAll;
     }
 
+    @GetMapping("/event/{idE}")
+    List<Partner> getPartnerByEvent(@PathVariable(required = false) Integer idE){
+        List<Partner> findPartnerEvent = (List<Partner>) partnerDAOService.findByEventId(idE);
+        if (findPartnerEvent.isEmpty()){
+            throw new BadRequestExceptions(String.format("El id %d no existe en la base de datos",idE));
+        }
+
+        return findPartnerEvent;
+    }
+
 
     @PostMapping
     public Partner savePartner(@RequestBody Partner partner){
@@ -61,6 +71,8 @@ public class PartnerController {
 
         return byId.get();
     }
+
+
 
     @PutMapping("/{id_p}")
     Partner updatePartner(@PathVariable(value = "id_p") Integer id,@RequestBody Partner partner){

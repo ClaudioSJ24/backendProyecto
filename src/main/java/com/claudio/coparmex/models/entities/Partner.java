@@ -30,7 +30,8 @@ public class Partner extends Person {
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "idEvent")
-    @JsonIgnoreProperties(value = "partner")
+    @JsonIgnoreProperties({
+            "hibernateLazyInitializer","partner"})
 
     private Event event;
 

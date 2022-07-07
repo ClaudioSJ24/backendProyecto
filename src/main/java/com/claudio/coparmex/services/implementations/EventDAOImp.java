@@ -35,7 +35,8 @@ public class EventDAOImp implements EventDAO {
 
     @Override
     @Transactional
-    public void deleteById(Integer id) {
+    public Object deleteById(Integer id) {
         eventRepository.deleteById(id);
+        return null;
     }
 }

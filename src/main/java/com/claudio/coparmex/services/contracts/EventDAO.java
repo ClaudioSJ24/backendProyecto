@@ -9,5 +9,5 @@ public interface EventDAO {
     Optional<Event> findById(Integer id);
     Event save(Event event);
     Iterable<Event> findAll();
-    void deleteById(Integer id);
+    Object deleteById(Integer id);
 }

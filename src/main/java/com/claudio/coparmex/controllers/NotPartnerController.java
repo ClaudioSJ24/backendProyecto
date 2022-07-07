@@ -7,13 +7,16 @@ import com.claudio.coparmex.models.entities.Person;
 import com.claudio.coparmex.services.contracts.EventDAO;
 import com.claudio.coparmex.services.contracts.NotPartnerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/notPartner")
+@RequestMapping("/notPartners")
 public class NotPartnerController {
 
     private final NotPartnerDAO notPartnerDAOService;
@@ -30,48 +33,76 @@ public class NotPartnerController {
         this.eventDAOService = eventDAOService;
     }
 
-    @GetMapping()
-    List<NotPartner> getAllNotPartner(){
+    @GetMapping("/getAll")
+    ResponseEntity<?> getAllNotPartner(){
+
+        Map<String,Object> message = new HashMap<>();
         List<NotPartner> allNotPartner = (List<NotPartner>) notPartnerDAOService.getAllNotPartner();
 
+
         if (allNotPartner.isEmpty()){
-            throw new BadRequestExceptions("No existen datos que mostrar");
+            //throw new BadRequestExceptions("No existen datos que mostrar");
+            message.put("Success",Boolean.FALSE);
+            message.put("Message", String.format("No existen datos que mostrar"));
+            return ResponseEntity.badRequest().body(message);
         }
-        return allNotPartner;
+
+        message.put("Success", Boolean.TRUE);
+        message.put("Data", allNotPartner);
+        return ResponseEntity.ok(message);
 
 
 
     }
 
 
-    @GetMapping("/{id}" )
-    Person findIdNotPartner(@PathVariable(required = false) Integer id){
-     Optional<NotPartner> findId = notPartnerDAOService.findByIdP(id);
+    @GetMapping("/getId/{id}" )
+    ResponseEntity<?> findIdNotPartner(@PathVariable(required = false) Integer id){
+
+        Map<String,Object> message = new HashMap<>();
+        Optional<NotPartner> findId = notPartnerDAOService.findByIdP(id);
 
      if (!findId.isPresent()){
-         throw new BadRequestExceptions("El id %d no existe"+id);
+         //throw new BadRequestExceptions("El id %d no existe"+id);
+         message.put("Success", Boolean.FALSE);
+         message.put("Message", String.format("El id %d no existe en la base de datos",id));
+         return ResponseEntity.badRequest().body(message);
      }
-     return findId.get();
+     message.put("Success", Boolean.TRUE);
+     message.put("Data", findId);
+     return ResponseEntity.ok(message);
 
     }
     @GetMapping("event/{idE}")
-    List<NotPartner> findNotPartnerEvent(@PathVariable Integer idE){
+    ResponseEntity<?> findNotPartnerEvent(@PathVariable Integer idE){
+
+        Map<String,Object> message = new HashMap<>();
 
         List<NotPartner> listEvent = (List<NotPartner>) notPartnerDAOService.findByIdEvent(idE);
         if (listEvent.isEmpty()){
-            throw new BadRequestExceptions("No existen personas en la base de datos con el evento "+idE);
-
+            //throw new BadRequestExceptions("No existen personas en la base de datos con el evento "+idE);
+            message.put("Success", Boolean.FALSE);
+            message.put("Message", String.format("El id %d no existe en la base de datos",idE));
+            return ResponseEntity.badRequest().body(message);
         }
-        return  listEvent;
+
+        message.put("Success", Boolean.TRUE);
+        message.put("Message", listEvent);
+        return  ResponseEntity.ok(message);
 
     }
 
-    @PutMapping("/{id}")
-    NotPartner updateNotPartner(@PathVariable(required = false) Integer id, @RequestBody NotPartner notPartner){
+    @PutMapping("/update/{id}")
+    ResponseEntity updateNotPartner(@PathVariable(required = false) Integer id, @RequestBody NotPartner notPartner){
+
+        Map<String,Object> message = new HashMap<>();
         Optional<NotPartner> findIdNotPartner = notPartnerDAOService.findByIdP(id);
 
         if (findIdNotPartner.isEmpty()){
-            throw new BadRequestExceptions("El id %d no existe en la base de datos");
+            //throw new BadRequestExceptions("El id %d no existe en la base de datos");
+            message.put("Success", Boolean.FALSE);
+            message.put("Message", String.format("El id %d no existe en la base de datos",id));
+            return ResponseEntity.badRequest().body(message);
         }
 
         NotPartner updateNotPartner;
@@ -82,19 +113,31 @@ public class NotPartnerController {
         updateNotPartner.setPhone(notPartner.getPhone());
         updateNotPartner.setEmail(notPartner.getEmail());
 
-        return (NotPartner) notPartnerDAOService.save(updateNotPartner);
+        message.put("Success", Boolean.TRUE);
+        message.put("Message", notPartnerDAOService.save(updateNotPartner));
+        return ResponseEntity.ok(message);
+
+
     }
 
     @PutMapping("/{idN}/event/{idE}")
-    NotPartner addEventNotPartner(@PathVariable Integer idN,@PathVariable Integer idE){
+    ResponseEntity<?> addEventNotPartner(@PathVariable Integer idN,@PathVariable Integer idE){
 
+        Map<String,Object> message = new HashMap<>();
         Optional<NotPartner> byIdN = notPartnerDAOService.findByIdP(idN);
         if (!byIdN.isPresent()){
-            throw new BadRequestExceptions(String.format("El id %d no existe en la base de datos",idN));
+            //throw new BadRequestExceptions(String.format("El id %d no existe en la base de datos",idN));
+            message.put("Success", Boolean.FALSE);
+            message.put("Message", String.format("El id %d no existe en la base de datos",idN));
+            return ResponseEntity.badRequest().body(message);
+
         }
         Optional<Event> byIdE = eventDAOService.findById(idE);
-        if (byIdE.isEmpty()){
-            throw new BadRequestExceptions(String.format("El id %d no existe en la base de datos",idE));
+        if (byIdE.isEmpty()) {
+            //throw new BadRequestExceptions(String.format("El id %d no existe en la base de datos",idE));
+            message.put("Success", Boolean.FALSE);
+            message.put("Message", String.format("El id %d no existe en la base de datos",idE));
+            return ResponseEntity.badRequest().body(message);
         }
 
         NotPartner notPartner = byIdN.get();
@@ -102,14 +145,23 @@ public class NotPartnerController {
 
         notPartner.setEvent(event);
 
-        return (NotPartner) notPartnerDAOService.save(notPartner);
+        message.put("Success", Boolean.TRUE);
+        message.put("Message", notPartnerDAOService.save(notPartner));
+        return ResponseEntity.ok(message);
+
+
     }
 
-    @PostMapping
-    NotPartner saveNotPartner(@RequestBody NotPartner notPartner){
-        return (NotPartner) notPartnerDAOService.save(notPartner);
+    @PostMapping("/save")
+    ResponseEntity<?> saveNotPartner(@RequestBody NotPartner notPartner){
+        Map<String, Object> message = new HashMap<>();
+        message.put("Success", Boolean.TRUE);
+        message.put("Message", notPartnerDAOService.save(notPartner));
+        return ResponseEntity.ok(message);
+
+
     }
-    @DeleteMapping("/{id_n}")
+    @DeleteMapping("/delete/{id_n}")
     void deleteNotPartner(@PathVariable(value = "id_n", required = false) Integer id){
 
        Optional<NotPartner> findId = notPartnerDAOService.findByIdP(id);

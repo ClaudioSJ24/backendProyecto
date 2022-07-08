@@ -60,15 +60,19 @@ public abstract class Person implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private byte pasess;
+
     public Person() {
     }
 
-    public Person(Integer idP, String name, String lastname, String phone, String email) {
+    public Person(Integer idP, String name, String lastname, String phone, String email, byte passes) {
         this.idP = idP;
         this.name = name;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
+        this.pasess = passes;
     }
 
     public Integer getIdP() {
@@ -111,6 +115,14 @@ public abstract class Person implements Serializable {
         this.email = email;
     }
 
+    public byte getPasess() {
+        return pasess;
+    }
+
+    public void setPasess(byte pasess) {
+        this.pasess = pasess;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -119,6 +131,7 @@ public abstract class Person implements Serializable {
                 ", lastname='" + lastname + '\'' +
                 ", phone=" + phone +
                 ", email='" + email + '\'' +
+                ", pasess=" + pasess +
                 '}';
     }
 

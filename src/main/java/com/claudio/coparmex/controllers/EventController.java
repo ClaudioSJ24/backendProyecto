@@ -119,8 +119,9 @@ public class EventController {
             return ResponseEntity.badRequest().body(messaje);
         }
 
+
         messaje.put("Success", Boolean.TRUE);
-        messaje.put("Data",eventDAOService.deleteById(id) );
+        messaje.put("Data",eventDAOService.deleteById(id));
         return ResponseEntity.ok(messaje);
     }
 }

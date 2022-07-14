@@ -7,6 +7,7 @@ import com.claudio.coparmex.services.contracts.EventDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class EventController {
         this.eventDAOService = eventDAOService;
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @GetMapping("/getAll")
     public ResponseEntity<?> getAllEvents(){
 
@@ -50,6 +52,7 @@ public class EventController {
     }
 
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @GetMapping("/getId/{code}")
     public ResponseEntity<?> findById(@PathVariable(value = "code", required = false) Integer id){
 
@@ -72,6 +75,7 @@ public class EventController {
 
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PostMapping("/save")
     public ResponseEntity<?> saveEvent(@RequestBody Event event){
 
@@ -83,6 +87,7 @@ public class EventController {
 
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PutMapping("/update/{id_e}")
     public ResponseEntity<?> updateEvent(@PathVariable(value = "id_e") Integer id,@RequestBody Event event){
 
@@ -108,6 +113,7 @@ public class EventController {
 
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @DeleteMapping("delete/{id}")
     public  ResponseEntity<?> deleteEvent(@PathVariable Integer id){
 

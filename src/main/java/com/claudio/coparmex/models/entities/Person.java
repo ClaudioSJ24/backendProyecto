@@ -61,12 +61,12 @@ public abstract class Person implements Serializable {
     private String email;
 
     @Column(nullable = false)
-    private byte pasess;
+    private int pasess;
 
     public Person() {
     }
 
-    public Person(Integer idP, String name, String lastname, String phone, String email, byte passes) {
+    public Person(Integer idP, String name, String lastname, String phone, String email, int passes) {
         this.idP = idP;
         this.name = name;
         this.lastname = lastname;
@@ -115,11 +115,11 @@ public abstract class Person implements Serializable {
         this.email = email;
     }
 
-    public byte getPasess() {
+    public int getPasess() {
         return pasess;
     }
 
-    public void setPasess(byte pasess) {
+    public void setPasess(int pasess) {
         this.pasess = pasess;
     }
 

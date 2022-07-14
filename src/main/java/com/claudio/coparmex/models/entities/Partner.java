@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class Partner extends Person {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String user;
     @Column(nullable = false, unique = true)
     private String password;
@@ -45,8 +45,7 @@ public class Partner extends Person {
     private Event event;
 
 
-    @Column(nullable = false)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_rol",
             joinColumns = @JoinColumn(name = "partner_id"),
@@ -59,7 +58,8 @@ public class Partner extends Person {
     }
 
 
-    public Partner(Integer id, String name, String lastname, String phone, String email,byte passes,String password, String company, Address address,  String user) {
+
+    public Partner(Integer id, String name, String lastname, String phone, String email, int passes,String password, String company, Address address,  String user) {
         super(id, name, lastname, phone, email,passes);
         this.password = password;
         this.company = company;
@@ -67,11 +67,19 @@ public class Partner extends Person {
         this.user = user;
     }
 
-    public Partner(Integer idP, String name, String lastname, String phone, String email, byte passes,String password, Set<Rol> roles) {
+    /*public Partner(Integer idP, String name, String lastname, String phone, String email, int passes,String password, Set<Rol> roles) {
         super(idP, name, lastname, phone, email, passes);
         this.password = password;
         this.roles = roles;
-    }
+    }*/
+   /* public Partner(Integer id, String name, String lastname, String phone, String email, int passes,String password, String company, Address address,  String user, Set<Rol> roles) {
+        super(id, name, lastname, phone, email,passes);
+        this.password = password;
+        this.company = company;
+        this.address = address;
+        this.user = user;
+        this.roles = roles;
+    }*/
 
     public String getUser() {
         return user;

@@ -8,6 +8,7 @@ import com.claudio.coparmex.services.contracts.EventDAO;
 import com.claudio.coparmex.services.contracts.NotPartnerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class NotPartnerController {
         this.eventDAOService = eventDAOService;
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @GetMapping("/getAll")
     ResponseEntity<?> getAllNotPartner(){
 
@@ -56,6 +58,7 @@ public class NotPartnerController {
     }
 
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @GetMapping("/getId/{id}" )
     ResponseEntity<?> findIdNotPartner(@PathVariable(required = false) Integer id){
 
@@ -73,6 +76,7 @@ public class NotPartnerController {
      return ResponseEntity.ok(message);
 
     }
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @GetMapping("event/{idE}")
     ResponseEntity<?> findNotPartnerEvent(@PathVariable Integer idE){
 
@@ -92,6 +96,7 @@ public class NotPartnerController {
 
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PutMapping("/update/{id}")
     ResponseEntity updateNotPartner(@PathVariable(required = false) Integer id, @RequestBody NotPartner notPartner){
 
@@ -161,6 +166,8 @@ public class NotPartnerController {
 
 
     }
+
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @DeleteMapping("/delete/{id_n}")
     void deleteNotPartner(@PathVariable(value = "id_n", required = false) Integer id){
 

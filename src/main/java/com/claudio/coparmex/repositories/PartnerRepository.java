@@ -37,6 +37,18 @@ public interface PartnerRepository extends PersonRepository{
     @Query("select p from Partner p join fetch p.event e where e.idEvent = ?1")
     Iterable<Partner> findByEventId(Integer idE);
 
+    Optional<Partner> findByUser(String user);
+
+    Optional <Partner> findByEmail(String email);
+
+    Optional<Partner> findByPassword(String password);
+   /* @Query("select p from Partner p where p.user = ?1")
+    Optional <Partner> partnerByUser(String user);
+*/
+   /* @Query("select p from Partner p where p.password = ?1")
+    boolean existsByPassword(String password);*/
+
+
 
 
 

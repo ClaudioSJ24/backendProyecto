@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Table;
 import java.util.Optional;
 
 @Service()
@@ -56,6 +55,42 @@ public class PartnerDAOImp extends PersonDAOImp implements PartnerDAO {
     public Iterable<Partner> findByEventId(Integer idE) {
         return ((PartnerRepository)genericRepository).findByEventId(idE);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Partner> findByUser(String user) {
+
+        return ((PartnerRepository)genericRepository).findByUser(user);
+    }
+
+    @Override
+    public Optional<Partner> findByPassword(String password) {
+        return ((PartnerRepository)genericRepository).findByPassword(password);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Partner> findByEmail(String email) {
+        return ((PartnerRepository)genericRepository).findByEmail(email);
+    }
+
+    /*@Override
+    @Transactional
+    public Boolean existsPartnerByUser(String user) {
+        return ((PartnerRepository)genericRepository).existsPartnerByUser(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByEmail(String email) {
+        return ((PartnerRepository)genericRepository).existsByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByPassword(String password) {
+        return ((PartnerRepository)genericRepository).existsByPassword(password);
+    }*/
 
 
 }

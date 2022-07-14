@@ -27,6 +27,18 @@ public interface PartnerDAO extends PersonDAO {
     Optional<Partner> findByIdP(Integer idPartner);
     Iterable<Partner> findByEventId(Integer idE);
 
+    Optional<Partner> findByUser(String user);
+
+    Optional<Partner> findByPassword(String password);
+
+    Optional <Partner> findByEmail(String email);
+
+
+   /* Boolean existsPartnerByUser(String user);
+    boolean existsByEmail(String email);
+
+    boolean existsByPassword(String password);*/
+
 
 
 }

@@ -123,7 +123,6 @@ public class EvCommand implements CommandLineRunner {
 
         Rol rolA = new Rol(null, RolName.ROL_ADMINISTRATOR);
         Rol rolU = new Rol(null,RolName.ROL_PARTNER);
-
         rolDAOImpService.save(rolA);
 
         rolDAOImpService.save(rolU);

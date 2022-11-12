@@ -1,11 +1,12 @@
 package com.claudio.coparmex.services.contracts;
 
-import com.claudio.coparmex.models.entities.NotPartner;
+import com.claudio.coparmex.models.entities.Partner;
+import com.claudio.coparmex.models.entities.User;
 import com.claudio.coparmex.models.entities.Person;
 
 import java.util.Optional;
 
-public interface NotPartnerDAO extends PersonDAO {
+public interface UserDAO extends PersonDAO {
 
     /***
      * En esta interface se establecen todos los metodos de un crud basico heredados de PesonaDAO que se tienen que implementar
@@ -19,9 +20,12 @@ public interface NotPartnerDAO extends PersonDAO {
      */
     Optional<Person> findByName(String name);
 
-        Iterable<NotPartner> getAllNotPartner();
+        Iterable<User> getAllUsers();
 
-    Optional<NotPartner> findByIdP(Integer id);
-    Iterable<NotPartner> findByIdEvent(Integer idE);
+    Optional<User> findByIdP(Integer id);
 
+    Optional<User> findByUser(String user);
+
+
+    Optional <User> findByEmail(String email);
 }

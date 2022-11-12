@@ -14,10 +14,7 @@ import java.util.Set;
 
 public class Partner extends Person {
 
-    @Column(nullable = false, unique = true)
-    private String user;
-    @Column(nullable = false, unique = true)
-    private String password;
+
 
     @Column(nullable = false, length = 40)
     private String company;
@@ -30,28 +27,7 @@ public class Partner extends Person {
 
 
 
-    @ManyToOne(
-            optional = true,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "idEvent")
-    @JsonIgnoreProperties({
-            "hibernateLazyInitializer","partner"})
 
-    private Event event;
-
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_rol",
-            joinColumns = @JoinColumn(name = "partner_id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id")
-    )
-    private Set<Rol> roles = new HashSet<>();
 
 
     public Partner() {
@@ -59,12 +35,11 @@ public class Partner extends Person {
 
 
 
-    public Partner(Integer id, String name, String lastname, String phone, String email, int passes,String password, String company, Address address,  String user) {
-        super(id, name, lastname, phone, email,passes);
-        this.password = password;
+    public Partner(Integer id, String name, String lastname, String phone, String email,String company, Address address) {
+        super(id, name, lastname, phone, email);
         this.company = company;
         this.address = address;
-        this.user = user;
+
     }
 
     /*public Partner(Integer idP, String name, String lastname, String phone, String email, int passes,String password, Set<Rol> roles) {
@@ -81,31 +56,6 @@ public class Partner extends Person {
         this.roles = roles;
     }*/
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Rol> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Rol> roles) {
-        this.roles = roles;
-    }
 
     public String getCompany() {
         return company;
@@ -121,14 +71,6 @@ public class Partner extends Person {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
     }
 
     @PrePersist
@@ -147,8 +89,7 @@ public class Partner extends Person {
                 "Partner{" +
                 "company='" + company + '\'' +
                 ", address=" + address +
-                ", user=" + user +
-                ", event=" + event +
+
                 ", dischargeDate=" + dischargeDate +
                 ", updateDate=" + updateDate +
 

@@ -1,8 +1,10 @@
 package com.claudio.coparmex.services.implementations;
 
 import com.claudio.coparmex.models.entities.Partner;
+import com.claudio.coparmex.models.entities.User;
 import com.claudio.coparmex.models.entities.UserM;
 import com.claudio.coparmex.services.contracts.PartnerDAO;
+import com.claudio.coparmex.services.contracts.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsPasswordService;
@@ -14,10 +16,10 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
-    PartnerDAO partnerDAOService;
+    UserDAO userDAOService;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Partner partner = partnerDAOService.findByUser(username).get();
-        return UserM.build(partner);
+        User user = userDAOService.findByUser(username).get();
+        return UserM.build(user);
     }
 }

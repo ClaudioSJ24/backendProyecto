@@ -20,16 +20,16 @@ public interface PartnerDAO extends PersonDAO {
      * metodos comunes a implementar en PartnerDAOImpl.
      * */
 
-    Iterable<Person> findPartnerEvent(String name);
+
 
     Iterable<Partner> getAllPartner();
 
     Optional<Partner> findByIdP(Integer idPartner);
-    Iterable<Partner> findByEventId(Integer idE);
 
-    Optional<Partner> findByUser(String user);
 
-    Optional<Partner> findByPassword(String password);
+
+
+
 
     Optional <Partner> findByEmail(String email);
 

@@ -1,10 +1,11 @@
 package com.claudio.coparmex.services.implementations;
 
-import com.claudio.coparmex.models.entities.NotPartner;
+import com.claudio.coparmex.models.entities.Partner;
+import com.claudio.coparmex.models.entities.User;
 import com.claudio.coparmex.models.entities.Person;
-import com.claudio.coparmex.repositories.NotPartnerRepository;
+import com.claudio.coparmex.repositories.UserRepository;
 import com.claudio.coparmex.repositories.PersonRepository;
-import com.claudio.coparmex.services.contracts.NotPartnerDAO;
+import com.claudio.coparmex.services.contracts.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
-public class NotPartnerDAOImp extends PersonDAOImp implements NotPartnerDAO {
+@Service()
+public class UserDAOImp extends PersonDAOImp implements UserDAO {
 
     /**
      * Se crea una instancia del repositorio para poder utilizar los metodos esenciales
@@ -21,8 +22,8 @@ public class NotPartnerDAOImp extends PersonDAOImp implements NotPartnerDAO {
      * que a su vez hereda de la clase CrudRepository
      * **/
     @Autowired
-    /** @Qualifier(value = "notPartnersRepository") Nombre del Bean a utilizar de interfaz NotPartnerDAO*/
-    public NotPartnerDAOImp(@Qualifier(value = "notPartnersRepository")PersonRepository genericRepository) {
+    /** @Qualifier(value = "usersRepository") Nombre del Bean a utilizar de interfaz NotPartnerDAO*/
+    public UserDAOImp(@Qualifier(value = "usersRepository")PersonRepository genericRepository) {
         super(genericRepository);
     }
 
@@ -34,23 +35,30 @@ public class NotPartnerDAOImp extends PersonDAOImp implements NotPartnerDAO {
     @Override
     @Transactional(readOnly = true)
     public Optional<Person> findByName(String name) {
-        return ((NotPartnerRepository)genericRepository).findByName(name);
+        return ((UserRepository)genericRepository).findByName(name);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Iterable<NotPartner> getAllNotPartner() {
-        return ((NotPartnerRepository)genericRepository).getAllNotPartner();
+    public Iterable<User> getAllUsers (){
+        return ((UserRepository)genericRepository).getAllUsers();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<NotPartner> findByIdP(Integer id) {
-        return ((NotPartnerRepository)genericRepository).findByIdP(id);
+    public Optional<User> findByIdP(Integer id) {
+        return ((UserRepository)genericRepository).findByIdP(id);
     }
 
     @Override
-    public Iterable<NotPartner> findByIdEvent(Integer idE) {
-        return ((NotPartnerRepository)genericRepository).findByIdEvent(idE);
+    public Optional<User> findByUser(String user) {
+        return ((UserRepository)genericRepository).findByUser(user);
     }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return ((UserRepository)genericRepository).findByEmail(email);
+    }
+
+
 }

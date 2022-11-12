@@ -8,6 +8,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Clase que posee todos los atributos de la clase padre para su correcta implementación
+ */
 public class UserM implements UserDetails {
     private String name;
     private String userM;
@@ -15,30 +18,29 @@ public class UserM implements UserDetails {
     private String phone;
     private String email;
     private String password;
-    private int passes;
 
-    private String company;
+
+
     private Address address;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserM(String name, String userM, String lastname, String phone, String email, String password, int passes, Address address, Collection<? extends GrantedAuthority> authorities) {
+    public UserM(String name, String userM, String lastname, String phone, String email, String password,  Collection<? extends GrantedAuthority> authorities) {
         this.name = name;
         this.userM = userM;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
         this.password = password;
-        this.passes = passes;
-        this.address = address;
+
         this.authorities = authorities;
     }
 
-    public static UserM build(Partner user){
+    public static UserM build(User user){
 
         List<GrantedAuthority> authorities =
                 user.getRoles().stream().map(rol -> new SimpleGrantedAuthority(
                         rol.getNameRol().name())).collect(Collectors.toList());
-        return new UserM(user.getName(), user.getUser(),user.getLastname(), user.getPhone(), user.getEmail(), user.getPassword(), user.getPasess(), user.getAddress(),authorities);
+        return new UserM(user.getName(), user.getUser(),user.getLastname(), user.getPhone(), user.getEmail(), user.getPassword(), authorities);
 
 
     }
@@ -115,13 +117,7 @@ public class UserM implements UserDetails {
         this.password = password;
     }
 
-    public int getPasses() {
-        return passes;
-    }
 
-    public void setPasses(int passes) {
-        this.passes = passes;
-    }
 
     public Address getAddress() {
         return address;

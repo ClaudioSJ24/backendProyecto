@@ -22,8 +22,7 @@ public interface PartnerRepository extends PersonRepository{
      * Destacar que los campos utilizados para realizar la consulta el campo tienen que tener el mismo nombre establecido en la clase
      * Event, es decir, se hace ca consulta con nameEvent
      * */
-    @Query("select p from Partner p where p.event.nameEvent=?1")
-    Iterable<Person> findPartnerEvent(String name);
+
 
     /***
      *
@@ -34,14 +33,13 @@ public interface PartnerRepository extends PersonRepository{
 
     Optional<Partner> findByIdP(Integer idPartner);
 
-    @Query("select p from Partner p join fetch p.event e where e.idEvent = ?1")
-    Iterable<Partner> findByEventId(Integer idE);
 
-    Optional<Partner> findByUser(String user);
+
+
 
     Optional <Partner> findByEmail(String email);
 
-    Optional<Partner> findByPassword(String password);
+
    /* @Query("select p from Partner p where p.user = ?1")
     Optional <Partner> partnerByUser(String user);
 */

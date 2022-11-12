@@ -64,7 +64,7 @@ public class SecurityM extends WebSecurityConfigurerAdapter{
                 .antMatchers("/auth/**").permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/notPartners/**").permitAll()
+                .antMatchers("/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)

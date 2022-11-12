@@ -1,6 +1,7 @@
 package com.claudio.coparmex.repositories;
 
-import com.claudio.coparmex.models.entities.NotPartner;
+import com.claudio.coparmex.models.entities.Partner;
+import com.claudio.coparmex.models.entities.User;
 import com.claudio.coparmex.models.entities.Person;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,8 +12,8 @@ import java.util.Optional;
  * Asignamos nombre del repositorio para utilizar el Bean  mediante @Qualifier, debido a que de momento
  * esta clase hereda de persona y persona no genera un Bean
  * */
-@Repository(value = "notPartnersRepository")
-public interface NotPartnerRepository extends PersonRepository{
+@Repository(value = "usersRepository")
+public interface UserRepository extends PersonRepository{
 
     /**
      * Esta consulta no necesita de la anotacion @Query debido a que son metodos ya establecidos de spring Data (JPA) que ya estan previamente
@@ -25,13 +26,16 @@ public interface NotPartnerRepository extends PersonRepository{
 
     Optional<Person> findByName(String name);
 
-    @Query("select n from NotPartner n inner join Person p on n.idP=p.idP")
-    Iterable<NotPartner> getAllNotPartner();
+    @Query("select n from User n inner join Person p on n.idP=p.idP")
+    Iterable<User> getAllUsers();
 
-    Optional<NotPartner> findByIdP(Integer id);
+    Optional<User> findByIdP(Integer id);
 
-    @Query("select n from NotPartner n join fetch n.event e where e.idEvent=?1")
-    Iterable<NotPartner> findByIdEvent(Integer idE);
+    Optional<User> findByUser(String user);
+
+    Optional <User> findByEmail(String email);
+
+
 
 
 }

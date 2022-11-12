@@ -44,7 +44,7 @@ import java.util.Objects;
  */
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Partner.class, name = "partner"),
-        @JsonSubTypes.Type(value = NotPartner.class, name = "notPartner")
+        @JsonSubTypes.Type(value = User.class, name = "user")
 })
 public abstract class Person implements Serializable {
 
@@ -60,19 +60,17 @@ public abstract class Person implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private int pasess;
 
     public Person() {
     }
 
-    public Person(Integer idP, String name, String lastname, String phone, String email, int passes) {
+    public Person(Integer idP, String name, String lastname, String phone, String email) {
         this.idP = idP;
         this.name = name;
         this.lastname = lastname;
         this.phone = phone;
         this.email = email;
-        this.pasess = passes;
+
     }
 
     public Integer getIdP() {
@@ -115,13 +113,7 @@ public abstract class Person implements Serializable {
         this.email = email;
     }
 
-    public int getPasess() {
-        return pasess;
-    }
 
-    public void setPasess(int pasess) {
-        this.pasess = pasess;
-    }
 
     @Override
     public String toString() {
@@ -131,7 +123,7 @@ public abstract class Person implements Serializable {
                 ", lastname='" + lastname + '\'' +
                 ", phone=" + phone +
                 ", email='" + email + '\'' +
-                ", pasess=" + pasess +
+
                 '}';
     }
 

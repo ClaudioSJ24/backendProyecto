@@ -2,23 +2,14 @@ package com.claudio.coparmex.controllers;
 
 import com.claudio.coparmex.exceptions.BadRequestExceptions;
 import com.claudio.coparmex.models.entities.*;
-import com.claudio.coparmex.models.entities.enumerators.RolName;
 import com.claudio.coparmex.security.dto.NewPersonDto;
-import com.claudio.coparmex.security.jwt.JwtProvider;
-import com.claudio.coparmex.services.contracts.EventDAO;
 import com.claudio.coparmex.services.contracts.PartnerDAO;
-import com.claudio.coparmex.services.implementations.PartnerDAOImp;
 import com.claudio.coparmex.services.implementations.RolDAOImp;
-import com.claudio.coparmex.services.implementations.UserDetailsServiceImp;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -29,19 +20,15 @@ import java.util.*;
 public class PartnerController {
 
     private final PartnerDAO partnerDAOService;
-    private final EventDAO eventDAOService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
-    RolDAOImp rolDAOImp;
+
     /**
      * @Qualifier("partnerDAOImp") es el nombre del servicio a utilizar establecido en la clase PartnerDAOImp
      * para poder tener acceso a todos los metodos establecidos en la misma clase
      * */
     @Autowired
-    public PartnerController(@Qualifier("partnerDAOImp") PartnerDAO partnerDAOService, EventDAO eventDAOService) {
+    public PartnerController(@Qualifier("partnerDAOImp") PartnerDAO partnerDAOService) {
         this.partnerDAOService = partnerDAOService;
-        this.eventDAOService = eventDAOService;
+
     }
 
     @PreAuthorize("hasRole('ADMINISTRATOR')")
@@ -63,29 +50,10 @@ public class PartnerController {
         return ResponseEntity.ok(message);
     }
 
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
-    @GetMapping("/event/{idE}")
-    ResponseEntity<?> getPartnerByEvent(@PathVariable(required = false) Integer idE){
-
-        Map<String,Object> message = new HashMap<>();
-        List<Partner> findPartnerEvent = (List<Partner>) partnerDAOService.findByEventId(idE);
-        if (findPartnerEvent.isEmpty()){
-            //throw new BadRequestExceptions(String.format("El id %d no existe en la base de datos",idE));
-            message.put("Success", Boolean.FALSE);
-            message.put("Message", String.format("El id %d no existe en la base de datos",idE));
-            return ResponseEntity.badRequest().body(message);
-        }
-
-        message.put("Success", Boolean.TRUE);
-        message.put("Message",findPartnerEvent);
-        return ResponseEntity.ok(message);
-
-
-    }
 
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody NewPersonDto partner){
+    public ResponseEntity<?> save(@RequestBody Partner partner){
         /**
          * {
          *     "class": "partner",
@@ -111,31 +79,25 @@ public class PartnerController {
          *
          */
 
-        Optional<Partner> byUser = partnerDAOService.findByUser(partner.getUser());
+         Map<String,Object> message = new HashMap<>();
 
         Optional<Partner> byEmail = partnerDAOService.findByEmail(partner.getEmail());
 
-        Map<String,Object> message = new HashMap<>();
+        if (byEmail.isPresent()) {
 
-        if (byUser.isPresent()){
-
-            //return new  ResponseEntity(new BadRequestExceptions("El nombre ya existe"), HttpStatus.BAD_REQUEST);
-            message.put("Success", Boolean.FALSE);
-            message.put("Message", String.format("El nombre de usuarios %s ya existe ",partner.getUser()));
-
-            return ResponseEntity.badRequest().body(message);
-        }
-
-        if (byEmail.isPresent()){
-
-           // return new  ResponseEntity(new BadRequestExceptions("El correo ya existe"), HttpStatus.BAD_REQUEST);
+            // return new  ResponseEntity(new BadRequestExceptions("El correo ya existe"), HttpStatus.BAD_REQUEST);
             message.put("Success", Boolean.FALSE);
             message.put("Message", String.format("El email %s ya existe ",partner.getEmail()));
 
             return ResponseEntity.badRequest().body(message);
+
+
+
         }
 
-        Partner savePartner = new Partner(null,partner.getName(), partner.getLastname(), partner.getPhone(), partner.getEmail(), partner.getPasses(),
+        Partner savePartner = new Partner(null, partner.getName(), partner.getLastname(), partner.getPhone(), partner.getEmail(), partner.getCompany(), partner.getAddress());
+
+       /* Partner savePartner = new Partner(null,partner.getName(), partner.getLastname(), partner.getPhone(), partner.getEmail(),
                                  passwordEncoder.encode(partner.getPassword()), partner.getCompany(), partner.getAddress(), partner.getUser());
         Set<Rol> roles = new HashSet<>();
 
@@ -145,7 +107,7 @@ public class PartnerController {
             roles.add(rolDAOImp.findByNameRol(RolName.ROL_ADMINISTRATOR).get());
         }
 
-        savePartner.setRoles(roles);
+        savePartner.setRoles(roles);*/
         message.put("Success", Boolean.TRUE);
         message.put("Data", partnerDAOService.save(savePartner));
         return ResponseEntity.ok(message);
@@ -155,17 +117,7 @@ public class PartnerController {
     }
 
 
-    /*@PostMapping("/save")
-    ResponseEntity<?> savePartner(@RequestBody Partner partner){
 
-        Map<String,Object> message = new HashMap<>();
-
-        message.put("Success", Boolean.TRUE);
-        message.put("Data", partnerDAOService.save(partner));
-        return ResponseEntity.ok(message);
-
-
-    }*/
 
     @PreAuthorize("hasRole('ADMINISTRATOR')")
     @GetMapping("/getId/{idP}")
@@ -214,36 +166,6 @@ public class PartnerController {
 
         message.put("Success", Boolean.TRUE);
         message.put("Message", partnerDAOService.save(partnerUpdate));
-        return ResponseEntity.ok(message);
-    }
-    @PutMapping("/{idP}/event/{idE}")
-    ResponseEntity<?> addEventPartner(@PathVariable Integer idP , @PathVariable Integer idE){
-
-        Map<String,Object> message = new HashMap<>();
-        Optional<Partner> byIdP = partnerDAOService.findByIdP(idP);
-        if (!byIdP.isPresent()){
-            //throw new BadRequestExceptions(String.format("El id %d no existe en la base de datos",idN));
-            message.put("Success", Boolean.FALSE);
-            message.put("Message", String.format("El id %d no existe en la base de datos",idP));
-            return ResponseEntity.badRequest().body(message);
-
-        }
-        Optional<Event> byIdE = eventDAOService.findById(idE);
-        if (byIdE.isEmpty()) {
-            //throw new BadRequestExceptions(String.format("El id %d no existe en la base de datos",idE));
-            message.put("Success", Boolean.FALSE);
-            message.put("Message", String.format("El id %d no existe en la base de datos", idE));
-            return ResponseEntity.badRequest().body(message);
-        }
-
-
-        Partner partner = byIdP.get();
-        Event event = byIdE.get();
-
-        partner.setEvent(event);
-
-        message.put("Success", Boolean.TRUE);
-        message.put("Message", partnerDAOService.save(partner));
         return ResponseEntity.ok(message);
     }
 

@@ -1,9 +1,8 @@
 package com.claudio.coparmex;
 
-import com.claudio.coparmex.models.entities.*;
+import com.claudio.coparmex.models.entities.Rol;
 import com.claudio.coparmex.models.entities.enumerators.RolName;
-import com.claudio.coparmex.services.contracts.EventDAO;
-import com.claudio.coparmex.services.contracts.NotPartnerDAO;
+import com.claudio.coparmex.services.contracts.UserDAO;
 import com.claudio.coparmex.services.contracts.PartnerDAO;
 import com.claudio.coparmex.services.contracts.PersonDAO;
 import com.claudio.coparmex.services.implementations.RolDAOImp;
@@ -11,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * Clase que permite ejecutar la instacia de la clase Event
@@ -23,10 +20,9 @@ public class EvCommand implements CommandLineRunner {
 
     @Autowired
     RolDAOImp rolDAOImpService;
+
     @Autowired
-    private EventDAO eventDAOService;
-    @Autowired
-    private NotPartnerDAO notPartnerDAOService;
+    private UserDAO userDAOService;
 
     @Autowired
     private PartnerDAO partnerDAOService;
@@ -122,12 +118,12 @@ public class EvCommand implements CommandLineRunner {
 
 
         Rol rolA = new Rol(null, RolName.ROL_ADMINISTRATOR);
-        Rol rolU = new Rol(null,RolName.ROL_PARTNER);
+        Rol rolU = new Rol(null,RolName.ROL_USER);
         rolDAOImpService.save(rolA);
 
         rolDAOImpService.save(rolU);
 
-         */
+*/
 
 
 

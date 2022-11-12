@@ -13,10 +13,9 @@ public class NewPersonDto {
 
     private String phone;
     private String email;
-    private int passes;
+
     private String password;
-    private String company;
-    private Address address;
+
     private String user;
 
 
@@ -88,13 +87,7 @@ public class NewPersonDto {
         this.email = email;
     }
 
-    public int getPasses() {
-        return passes;
-    }
 
-    public void setPasses(int passes) {
-        this.passes = passes;
-    }
 
     public String getPassword() {
         return password;
@@ -104,21 +97,6 @@ public class NewPersonDto {
         this.password = password;
     }
 
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
     public String getUser() {
         return user;

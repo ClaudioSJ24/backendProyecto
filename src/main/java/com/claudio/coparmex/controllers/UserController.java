@@ -74,7 +74,7 @@ public class UserController {
      if (!findId.isPresent()){
          //throw new BadRequestExceptions("El id %d no existe"+id);
          message.put("Success", Boolean.FALSE);
-         message.put("Message", String.format("El id %d no existe en la base de datos",id));
+         message.put("Message", String.format("No existe un id %d asignado a un usuario en la base de datos",id));
          return ResponseEntity.badRequest().body(message);
      }
      message.put("Success", Boolean.TRUE);
@@ -93,7 +93,7 @@ public class UserController {
         if (findIdUser.isEmpty()){
             //throw new BadRequestExceptions("El id %d no existe en la base de datos");
             message.put("Success", Boolean.FALSE);
-            message.put("Message", String.format("El id %d no existe en la base de datos",id));
+            message.put("Message", String.format("No existe un id %d asignado a un usuario  en la base de datos",id));
             return ResponseEntity.badRequest().body(message);
         }
 
@@ -179,7 +179,7 @@ public class UserController {
 
        if (findId.isEmpty()){
            message.put("Success", Boolean.FALSE);
-           message.put("Message", String.format("El id  %d no existe en la base de datos ",id));
+           message.put("Message", String.format("No existe un id %d asignado a un usuario  en la base de datos",id));
 
            return ResponseEntity.badRequest().body(message);
        }

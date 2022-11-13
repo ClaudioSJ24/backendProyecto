@@ -31,7 +31,7 @@ public class PartnerController {
 
     }
 
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+   /* @PreAuthorize("hasRole('ADMINISTRATOR')")*/
     @GetMapping("/getAll")
     ResponseEntity<?> getAll(){
 
@@ -46,7 +46,7 @@ public class PartnerController {
 
 
         message.put("Success",Boolean.TRUE);
-        message.put("Data", partnerAll);
+        message.put("responsePartner", partnerAll);
         return ResponseEntity.ok(message);
     }
 
@@ -97,19 +97,9 @@ public class PartnerController {
 
         Partner savePartner = new Partner(null, partner.getName(), partner.getLastname(), partner.getPhone(), partner.getEmail(), partner.getCompany(), partner.getAddress());
 
-       /* Partner savePartner = new Partner(null,partner.getName(), partner.getLastname(), partner.getPhone(), partner.getEmail(),
-                                 passwordEncoder.encode(partner.getPassword()), partner.getCompany(), partner.getAddress(), partner.getUser());
-        Set<Rol> roles = new HashSet<>();
 
-        roles.add(rolDAOImp.findByNameRol(RolName.ROL_PARTNER).get());
-
-        if (partner.getRoles().contains("administrator")){
-            roles.add(rolDAOImp.findByNameRol(RolName.ROL_ADMINISTRATOR).get());
-        }
-
-        savePartner.setRoles(roles);*/
         message.put("Success", Boolean.TRUE);
-        message.put("Data", partnerDAOService.save(savePartner));
+        message.put("responsePartner", partnerDAOService.save(savePartner));
         return ResponseEntity.ok(message);
 
         /*partnerDAOService.save(savePartner);
@@ -119,7 +109,7 @@ public class PartnerController {
 
 
 
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+   /* @PreAuthorize("hasRole('ADMINISTRATOR')")*/
     @GetMapping("/getId/{idP}")
     ResponseEntity<?> findByIdPartner(@PathVariable(value = "idP", required = false) Integer id){
 
@@ -129,17 +119,17 @@ public class PartnerController {
         if (!byId.isPresent()){
             //throw new BadRequestExceptions("El id %d no existe"+id);
             message.put("Success", Boolean.FALSE);
-            message.put("Message", String.format("El id %d no existe en la base de datos",id));
+            message.put("Message", String.format("No existe un id %d asignado a un socio  en la base de datos",id));
             return ResponseEntity.badRequest().body(message);
         }
         message.put("Success", Boolean.TRUE);
-        message.put("Data", byId);
+        message.put("responsePartner", byId);
         return ResponseEntity.ok(message);
     }
 
 
 
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+   /* @PreAuthorize("hasRole('ADMINISTRATOR')")*/
     @PutMapping("/update/{id_p}")
     ResponseEntity<?> updatePartner(@PathVariable(value = "id_p") Integer id,@RequestBody Partner partner){
 
@@ -151,7 +141,7 @@ public class PartnerController {
         if (findPartner.isEmpty()){
             //throw new BadRequestExceptions("El id %d no existe en la base de datos");
             message.put("Success", Boolean.FALSE);
-            message.put("Message", String.format("El id %d no existe en la base de datos",id));
+            message.put("Message", String.format("No existe un id %d asignado a un socio  en la base de datos",id));
             return ResponseEntity.badRequest().body(message);
         }
 
@@ -165,21 +155,29 @@ public class PartnerController {
 
 
         message.put("Success", Boolean.TRUE);
-        message.put("Message", partnerDAOService.save(partnerUpdate));
+        message.put("responsePartner", partnerDAOService.save(partnerUpdate));
         return ResponseEntity.ok(message);
     }
 
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    /*@PreAuthorize("hasRole('ADMINISTRATOR')")*/
     @DeleteMapping("/delete/{id}")
-    void deletePartner(@PathVariable Integer id){
-        Optional<Partner> idD= partnerDAOService.findByIdP(id);
-        if (idD.isEmpty()){
-            throw new BadRequestExceptions("El id %d no existe"+id);
+    ResponseEntity<?> deletePartner(@PathVariable Integer id) {
+
+        Map<String, Object> message = new HashMap<>();
+        Optional<Partner> findId = partnerDAOService.findByIdP(id);
+        if (findId.isEmpty()) {
+            message.put("Success", Boolean.FALSE);
+            message.put("Message", String.format("No existe un id %d asignado a un socio  en la base de datos", id));
+
+            return ResponseEntity.badRequest().body(message);
         }
-        partnerDAOService.deleteById(id);
+
+        message.put("Success", Boolean.TRUE);
+        message.put("responseUser", partnerDAOService.deleteById(id));
+
+        return ResponseEntity.ok(message);
+
     }
-
-
 
 
 }

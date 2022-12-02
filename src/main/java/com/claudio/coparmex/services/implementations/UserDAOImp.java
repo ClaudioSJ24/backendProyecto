@@ -51,11 +51,19 @@ public class UserDAOImp extends PersonDAOImp implements UserDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> findByUser(String user) {
         return ((UserRepository)genericRepository).findByUser(user);
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<User> findByPassword(String password) {
+        return ((UserRepository)genericRepository).findByPassword(password);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<User> findByEmail(String email) {
         return ((UserRepository)genericRepository).findByEmail(email);
     }

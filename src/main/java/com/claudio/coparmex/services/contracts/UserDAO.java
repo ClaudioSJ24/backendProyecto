@@ -26,6 +26,6 @@ public interface UserDAO extends PersonDAO {
 
     Optional<User> findByUser(String user);
 
-
+    Optional <User> findByPassword(String password);
     Optional <User> findByEmail(String email);
 }

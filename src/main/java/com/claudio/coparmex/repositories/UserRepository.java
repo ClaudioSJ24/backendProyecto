@@ -33,6 +33,8 @@ public interface UserRepository extends PersonRepository{
 
     Optional<User> findByUser(String user);
 
+    Optional <User> findByPassword(String password);
+
     Optional <User> findByEmail(String email);
 
 

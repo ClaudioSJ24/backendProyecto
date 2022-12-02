@@ -1,20 +1,17 @@
 package com.claudio.coparmex.controllers;
 
-import com.claudio.coparmex.exceptions.BadRequestExceptions;
 import com.claudio.coparmex.models.entities.Rol;
 import com.claudio.coparmex.models.entities.User;
 import com.claudio.coparmex.models.entities.enumerators.RolName;
-import com.claudio.coparmex.security.dto.NewPersonDto;
+import com.claudio.coparmex.security.dto.NewUserDto;
 import com.claudio.coparmex.services.contracts.UserDAO;
 import com.claudio.coparmex.services.implementations.RolDAOImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.SecondaryTable;
 import java.util.*;
 
 @RestController
@@ -85,7 +82,7 @@ public class UserController {
 
    /* @PreAuthorize("hasRole('ADMINISTRATOR')")*/
     @PutMapping("/update/{id}")
-    ResponseEntity updateUser(@PathVariable(required = false) Integer id, @RequestBody NewPersonDto user){
+    ResponseEntity updateUser(@PathVariable(required = false) Integer id, @RequestBody User user){
 
         Map<String,Object> message = new HashMap<>();
         Optional<User> findIdUser = userDAOService.findByIdP(id);
@@ -125,7 +122,7 @@ public class UserController {
 
 
     @PostMapping("/save")
-    ResponseEntity<?> saveUser(@RequestBody NewPersonDto user){
+    ResponseEntity<?> saveUser(@RequestBody NewUserDto user){
         Map<String, Object> message = new HashMap<>();
         Optional<User> byUser = userDAOService.findByUser(user.getUser());
         Optional<User> byEmail = userDAOService.findByEmail(user.getEmail());

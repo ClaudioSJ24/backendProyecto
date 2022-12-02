@@ -74,39 +74,6 @@ public class SecurityM extends WebSecurityConfigurerAdapter{
         http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    /*
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsServiceImp).passwordEncoder(passwordEncoder());
-    }
 
-
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception{
-
-        return super.authenticationManagerBean();
-
-    }
-
-    protected AuthenticationManager authenticationManager() throws Exception{
-        return super.authenticationManager();
-    }
-
-    protected void configure(HttpSecurity httpSecurity) throws Exception{
-
-        httpSecurity
-                .cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        httpSecurity.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
-    }
-*/
 
 }

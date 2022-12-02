@@ -1,15 +1,10 @@
 package com.claudio.coparmex.controllers;
 
-import com.claudio.coparmex.exceptions.BadRequestExceptions;
 import com.claudio.coparmex.models.entities.*;
-import com.claudio.coparmex.security.dto.NewPersonDto;
 import com.claudio.coparmex.services.contracts.PartnerDAO;
-import com.claudio.coparmex.services.implementations.RolDAOImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;

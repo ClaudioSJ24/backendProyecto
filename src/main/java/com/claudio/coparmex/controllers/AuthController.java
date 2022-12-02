@@ -40,7 +40,7 @@ public class AuthController {
         if (bindingResult.hasErrors()){
             //return new  ResponseEntity(new BadRequestExceptions("Campos requeridos"), HttpStatus.BAD_REQUEST);
             message.put("Success", Boolean.FALSE);
-            message.put("Message", String.format("Nombre de usuario o password incorrectos"));
+            message.put("responseLogin", String.format("Nombre de usuario o password incorrectos"));
             return ResponseEntity.badRequest().body(message);
         }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUser(), loginDto.getPassword())) ;
@@ -49,7 +49,7 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
         message.put("Success", Boolean.TRUE);
-        message.put("Data", jwtDto);
+        message.put("responseLogin", jwtDto);
         return ResponseEntity.ok(message);
 
     }

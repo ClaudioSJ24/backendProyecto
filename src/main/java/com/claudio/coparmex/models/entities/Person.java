@@ -44,7 +44,8 @@ import java.util.Objects;
  */
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Partner.class, name = "partner"),
-        @JsonSubTypes.Type(value = User.class, name = "user")
+        @JsonSubTypes.Type(value = User.class, name = "user"),
+        @JsonSubTypes.Type(value =Contact.class, name= "contact" )
 })
 public abstract class Person implements Serializable {
 

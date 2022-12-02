@@ -16,6 +16,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin
 public class UserController {
 
     private final UserDAO userDAOService;
@@ -82,7 +83,7 @@ public class UserController {
 
    /* @PreAuthorize("hasRole('ADMINISTRATOR')")*/
     @PutMapping("/update/{id}")
-    ResponseEntity updateUser(@PathVariable(required = false) Integer id, @RequestBody User user){
+    ResponseEntity updateUser(@PathVariable(required = false) Integer id, @RequestBody NewUserDto user){
 
         Map<String,Object> message = new HashMap<>();
         Optional<User> findIdUser = userDAOService.findByIdP(id);
@@ -102,6 +103,8 @@ public class UserController {
         updateUser.setLastname(user.getLastname());
         updateUser.setPhone(user.getPhone());
         updateUser.setEmail(user.getEmail());
+        updateUser.setUser(user.getUser());
+        updateUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
 
         roles.add(rolDAOImp.findByNameRol(RolName.ROL_USER).get());

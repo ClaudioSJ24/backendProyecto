@@ -33,7 +33,6 @@ public class EvCommand implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
         /*
         Event even = new Event(null, "Situation Fiscal","Armando Sanchez","Hotel Casablanca");
         Event save = eventDAOService.save(even);
@@ -123,7 +122,13 @@ public class EvCommand implements CommandLineRunner {
 
         rolDAOImpService.save(rolU);
 
-*/
+         */
+
+
+
+
+
+
 
 
 

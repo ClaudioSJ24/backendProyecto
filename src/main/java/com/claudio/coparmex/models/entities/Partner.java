@@ -47,7 +47,7 @@ public class Partner extends Person {
         this.password = password;
         this.roles = roles;
     }*/
-   /* public Partner(Integer id, String name, String lastname, String phone, String email, int passes,String password, String company, Address address,  String user, Set<Rol> roles) {
+   /* public Partner(Integer id, String name, String lastname, String phone, Strinmail,g e int passes,String password, String company, Address address,  String user, Set<Rol> roles) {
         super(id, name, lastname, phone, email,passes);
         this.password = password;
         this.company = company;

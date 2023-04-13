@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service()
-
-
 public class PartnerDAOImp extends PersonDAOImp implements PartnerDAO {
 
     /**
@@ -32,8 +30,6 @@ public class PartnerDAOImp extends PersonDAOImp implements PartnerDAO {
      * Implementacion de metodos de interfaz PartnerDAO, destacar que se tiene que castear a PartnerRepository
      * debido a que por defecto utiliza PersonRepository
      * */
-
-
     @Override
     @Transactional(readOnly = true)
     public Iterable<Partner> getAllPartner() {
@@ -45,12 +41,6 @@ public class PartnerDAOImp extends PersonDAOImp implements PartnerDAO {
     public Optional<Partner> findByIdP(Integer idP) {
         return ((PartnerRepository)genericRepository).findByIdP(idP);
     }
-
-
-
-
-
-
     @Override
     @Transactional(readOnly = true)
     public Optional<Partner> findByEmail(String email) {

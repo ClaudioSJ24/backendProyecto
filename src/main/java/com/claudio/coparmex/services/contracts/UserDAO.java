@@ -19,13 +19,9 @@ public interface UserDAO extends PersonDAO {
      * Metodo proveniente de NotPartnerRepositorio para su implementacion en la clase NotPartnerDAOImp
      */
     Optional<Person> findByName(String name);
-
-        Iterable<User> getAllUsers();
-
+    Iterable<User> getAllUsers();
     Optional<User> findByIdP(Integer id);
-
     Optional<User> findByUser(String user);
-
     Optional <User> findByPassword(String password);
     Optional <User> findByEmail(String email);
 }

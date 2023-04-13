@@ -23,10 +23,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     JwtProvider jwtProvider;
 
-    @Autowired
-    UserDetailsServiceImp userDetailsServiceImp;
+    @Autowired    UserDetailsServiceImp userDetailsServiceImp;
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         try {
             String token = getToken(request);
             if (token != null && jwtProvider.validateToken(token)){
@@ -34,14 +34,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 UserDetails userDetails = userDetailsServiceImp.loadUserByUsername(user);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null,userDetails.getAuthorities());
-
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-
         }catch (Exception e){
             logger.error("Error en metodo doFilter"+e.getMessage());
         }
-
         filterChain.doFilter(request, response);
     }
 

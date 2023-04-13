@@ -49,56 +49,21 @@ public class PartnerController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody Partner partner){
-        /**
-         * {
-         *     "class": "partner",
-         *
-         *         "name": "Claudio",
-         *         "lastname": "anastacia Mendoza",
-         *         "phone": "345678965",
-         *         "email": "padrino@ljdfkh",
-         *         "passes": 4,
-         *         "password":"12345",
-         *         "company": "Sony",
-         *         "address": {
-         *             "street": "4 norte",
-         *             "number": 24,
-         *             "colony": "la orizabeña",
-         *             "codePostal": 78654,
-         *             "city": "Puebla"
-         *         },
-         *         "user": "que pasa hay",
-         *         "roles": ["administrator"] -->Campo opcional
-         *
-         * }
-         *
-         */
 
          Map<String,Object> message = new HashMap<>();
 
         Optional<Partner> byEmail = partnerDAOService.findByEmail(partner.getEmail());
-
         if (byEmail.isPresent()) {
-
-            // return new  ResponseEntity(new BadRequestExceptions("El correo ya existe"), HttpStatus.BAD_REQUEST);
             message.put("Success", Boolean.FALSE);
             message.put("Message", String.format("El email %s ya existe ",partner.getEmail()));
-
             return ResponseEntity.badRequest().body(message);
-
-
-
         }
-
-        Partner savePartner = new Partner(null, partner.getName(), partner.getLastname(), partner.getPhone(), partner.getEmail(), partner.getCompany(), partner.getAddress());
-
-
+        Partner savePartner = new Partner(null, partner.getName(), partner.getLastname(),
+                partner.getPhone(), partner.getEmail(), partner.getCompany(), partner.getAddress());
         message.put("Success", Boolean.TRUE);
         message.put("responsePartner", partnerDAOService.save(savePartner));
         return ResponseEntity.ok(message);
 
-        /*partnerDAOService.save(savePartner);
-        return new  ResponseEntity(new BadRequestExceptions("Usuario registrado"), HttpStatus.CREATED);*/
     }
 
 
@@ -147,8 +112,6 @@ public class PartnerController {
         partnerUpdate.setEmail(partner.getEmail());
         partnerUpdate.setCompany(partner.getCompany());
         partnerUpdate.setAddress(partner.getAddress());
-
-
         message.put("Success", Boolean.TRUE);
         message.put("responsePartner", partnerDAOService.save(partnerUpdate));
         return ResponseEntity.ok(message);

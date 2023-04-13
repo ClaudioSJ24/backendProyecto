@@ -8,12 +8,14 @@ public class NewUserDto {
     private String name;
     private String lastname;
 
+
     private String phone;
     private String email;
 
     private String password;
 
     private String user;
+
 
 
     private Set<String> roles = new HashSet<>();

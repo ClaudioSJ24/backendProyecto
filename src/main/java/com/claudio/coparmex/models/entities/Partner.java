@@ -13,9 +13,6 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "idPerson")
 
 public class Partner extends Person {
-
-
-
     @Column(nullable = false, length = 40)
     private String company;
     @Embedded
@@ -24,11 +21,6 @@ public class Partner extends Person {
     private LocalDateTime dischargeDate;
     @Column(name = "update_date")
     private LocalDateTime updateDate;
-
-
-
-
-
 
     public Partner() {
     }

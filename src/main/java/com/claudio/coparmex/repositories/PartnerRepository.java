@@ -34,9 +34,6 @@ public interface PartnerRepository extends PersonRepository{
     Optional<Partner> findByIdP(Integer idPartner);
 
 
-
-
-
     Optional <Partner> findByEmail(String email);
 
 

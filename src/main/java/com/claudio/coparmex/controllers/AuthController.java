@@ -32,18 +32,16 @@ public class AuthController {
     @PostMapping("/login")
     public  ResponseEntity<?> login(@RequestBody LoginDto loginDto, BindingResult bindingResult){
 
-     /*  Optional<User> byUser = userDAOService.findByUser(loginDto.getUser());
-        Optional<User> byPassword = userDAOService.findByPassword(loginDto.getPassword());*/
-
-        Map<String, Object> message = new HashMap<>();
+           Map<String, Object> message = new HashMap<>();
 
         if (bindingResult.hasErrors()){
-            //return new  ResponseEntity(new BadRequestExceptions("Campos requeridos"), HttpStatus.BAD_REQUEST);
+
             message.put("Success", Boolean.FALSE);
             message.put("responseLogin", String.format("Nombre de usuario o password incorrectos"));
             return ResponseEntity.badRequest().body(message);
         }
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUser(), loginDto.getPassword())) ;
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginDto.getUser(), loginDto.getPassword())) ;
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

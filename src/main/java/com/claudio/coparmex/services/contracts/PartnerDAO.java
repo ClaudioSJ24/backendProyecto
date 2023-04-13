@@ -13,22 +13,13 @@ import java.util.Optional;
 
 public interface PartnerDAO extends PersonDAO {
 
-
-
-
     /**
      * metodos comunes a implementar en PartnerDAOImpl.
      * */
 
-
-
     Iterable<Partner> getAllPartner();
 
     Optional<Partner> findByIdP(Integer idPartner);
-
-
-
-
 
 
     Optional <Partner> findByEmail(String email);

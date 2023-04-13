@@ -25,16 +25,11 @@ public interface UserRepository extends PersonRepository{
      */
 
     Optional<Person> findByName(String name);
-
     @Query("select n from User n inner join Person p on n.idP=p.idP")
     Iterable<User> getAllUsers();
-
     Optional<User> findByIdP(Integer id);
-
     Optional<User> findByUser(String user);
-
     Optional <User> findByPassword(String password);
-
     Optional <User> findByEmail(String email);
 
 
